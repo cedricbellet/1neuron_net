@@ -23,12 +23,28 @@ class TestMathFunctions(unittest.TestCase):
         self.assertEqual(m.Identity.calc(4.21), 4.21)
         self.assertEqual(m.Identity.diff(-100), 1)
 
-    def test_l2_norm(self):
-        self.assertEqual(m.L2Norm.calc(0, 1), 0)
-        self.assertEqual(m.L2Norm.calc(3, 1), 2)
-        self.assertAlmostEqual(m.L2Norm.calc(1, 4.4), 5.78)
-        self.assertAlmostEqual(m.L2Norm.calc(-1, -4.4), 5.78)
-        self.assertEqual(m.L2Norm.diff(9.542, 3), 6.542)
+    def test_squared_error(self):
+        self.assertEqual(m.SquaredError.calc(0, 1), 0.5)
+        self.assertEqual(m.SquaredError.calc(3, 1), 2)
+        self.assertAlmostEqual(m.SquaredError.calc(1, 4.4), 5.78)
+        self.assertAlmostEqual(m.SquaredError.calc(-1, -4.4), 5.78)
+        self.assertEqual(m.SquaredError.diff(9.542, 3), 6.542)
+
+    def test_cross_entropy(self):
+        """Test the cross entropy across edge cases"""
+        self.assertEqual(m.CrossEntropy.calc(2, 1), 1e3)
+        self.assertEqual(m.CrossEntropy.calc(-2, 0), 1e3)
+        self.assertAlmostEqual(m.CrossEntropy.calc(0.5, 1), 0.19314718)
+        self.assertAlmostEqual(m.CrossEntropy.calc(0.5, 0), 0.19314718)
+        self.assertAlmostEqual(m.CrossEntropy.calc(1, 1), 0)
+        self.assertAlmostEqual(m.CrossEntropy.calc(0, 1), 1e3)
+        self.assertAlmostEqual(m.CrossEntropy.calc(0.2, 0), 0.023143551)
+        self.assertRaises(m.CrossEntropy.calc(0.2, 0.2))
+        self.assertAlmostEqual(m.CrossEntropy.diff(0.2, 0), 0.25)
+        self.assertAlmostEqual(m.CrossEntropy.diff(0.2, 1), -4)
+        self.assertAlmostEqual(m.CrossEntropy.diff(0.9, 1), -0.1111111)
+        self.assertAlmostEqual(m.CrossEntropy.diff(0.999, 1), -0.0010010010)
+
 
 if __name__ == '__main__':
     unittest.main()

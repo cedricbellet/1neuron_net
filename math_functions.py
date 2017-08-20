@@ -1,4 +1,6 @@
 """Classes for activation and cost functions."""
+# -*- coding: utf-8 -*-
+from __future__ import division
 import math
 
 """Activation functions
@@ -43,7 +45,7 @@ and return the cost associated with the activation.
 The diff method is implicitely and differential on the activation argument.
 """
 
-class L2Norm(object):
+class SquaredError(object):
     """Implements the L2 norm or Euclidian distance"""
     def __init__(self):
         pass
@@ -55,3 +57,35 @@ class L2Norm(object):
     @classmethod
     def diff(cls, val1, val2):
         return val1 - val2
+
+class CrossEntropy(object):
+    """Implements the cross entropy loss function
+
+    val2 is assumed to be 0 or 1 always.
+    """
+    def __init__(self):
+        pass
+
+    @classmethod
+    def calc(cls, val1, val2):
+        if val1 == val2:
+            return 0
+        if val1 >= 1 or val1 <= 0:
+            return 1e3
+        elif val2 == 0:
+            return -math.log(1 - val1) - val1
+        elif val2 == 1:
+            return -math.log(val1) + val1 - 1
+
+    @classmethod
+    def diff(cls, val1, val2):
+        if val1 == val2:
+            return 0
+        if val2 == 0 and val1 <= 0:
+            return -1e3
+        elif val2 == 1 and val1 >= 1:
+            return 1e3
+        elif val2 == 0:
+            return 1/(1 - val1) - 1
+        elif val2 == 1:
+            return -1/val1 + 1

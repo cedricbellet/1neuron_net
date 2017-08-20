@@ -4,19 +4,19 @@ import pandas as pd
 import statsmodels.formula.api as sm
 
 # Load the data
-df = pd.read_csv('./data/winequality-red.csv', sep=';')
-print df[:1]
+# df = pd.read_csv('./data/winequality-red.csv', sep=';')
+# print df[:1]
 
 # Run a simple OLS
-result = sm.ols(
-    formula='''
-    quality ~ alcohol
-    ''', data=df
-).fit()
+# result = sm.ols(
+#     formula='''
+#     quality ~ alcohol
+#     ''', data=df
+# ).fit()
+#
+# print result.summary()
 
-print result.summary()
-
-#                             OLS Regression Results                            
+#                             OLS Regression Results
 # ==============================================================================
 # Dep. Variable:                quality   R-squared:                       0.227
 # Model:                            OLS   Adj. R-squared:                  0.226
@@ -41,6 +41,39 @@ print result.summary()
 #
 # Warnings:
 # [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+# Run a simple OLS
+# result = sm.ols(
+#     formula='''
+#     quality ~ sulphates + alcohol
+#     ''', data=df
+# ).fit()
+#
+# print result.summary()
+
+#                             OLS Regression Results
+# ==============================================================================
+# Dep. Variable:                quality   R-squared:                       0.270
+# Model:                            OLS   Adj. R-squared:                  0.269
+# Method:                 Least Squares   F-statistic:                     295.0
+# Date:                Sun, 13 Aug 2017   Prob (F-statistic):          9.62e-110
+# Time:                        21:54:15   Log-Likelihood:                -1675.1
+# No. Observations:                1599   AIC:                             3356.
+# Df Residuals:                    1596   BIC:                             3372.
+# Df Model:                           2
+# Covariance Type:            nonrobust
+# ==============================================================================
+#                  coef    std err          t      P>|t|      [0.025      0.975]
+# ------------------------------------------------------------------------------
+# Intercept      1.3750      0.177      7.748      0.000       1.027       1.723
+# sulphates      0.9941      0.102      9.713      0.000       0.793       1.195
+# alcohol        0.3460      0.016     21.256      0.000       0.314       0.378
+# ==============================================================================
+# Omnibus:                       45.302   Durbin-Watson:                   1.743
+# Prob(Omnibus):                  0.000   Jarque-Bera (JB):               79.015
+# Skew:                          -0.222   Prob(JB):                     6.95e-18
+# Kurtosis:                       3.994   Cond. No.                         111.
+# ==============================================================================
 
 # Run a simple OLS
 # result = sm.ols(
@@ -90,3 +123,25 @@ print result.summary()
 # [2] The condition number is large, 4.23e+04. This might indicate that there are
 # strong multicollinearity or other numerical problems.
 # [Finished in 1.065s]
+
+
+# Load the data
+df = pd.read_csv('./data/simple_multi_data.csv', sep=',')
+
+# Run a simple OLS
+result = sm.ols(
+    formula='''
+    output ~ input1 + input2 + input3
+    ''', data=df
+).fit()
+
+print result.summary()
+
+# ==============================================================================
+#                  coef    std err          t      P>|t|      [0.025      0.975]
+# ------------------------------------------------------------------------------
+# Intercept     12.0661     17.857      0.676      0.524     -31.628      55.760
+# input1        -2.0944      1.829     -1.145      0.296      -6.569       2.380
+# input2         1.5233      2.597      0.587      0.579      -4.830       7.877
+# input3        -2.9942      1.739     -1.722      0.136      -7.248       1.260
+# ==============================================================================
