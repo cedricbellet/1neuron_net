@@ -6,6 +6,8 @@ import random
 import math
 import csv
 
+NOISE = 0
+
 class DatasetModel(object):
     """A model able to generate values"""
 
@@ -103,10 +105,10 @@ SUM_GREATER_THAN_X_MODEL = DatasetModel(
     number_of_variables=2
 )
 
-LINEAR_MODEL.generate_csv()
-MULTLINEAR_MODEL.generate_csv()
-POLYNOMIAL_MODEL_1.generate_csv()
-POLYNOMIAL_MODEL_2.generate_csv()
-SINUSOID_MODEL.generate_csv()
-OUTSIDE_CIRCLE_MODEL.generate_csv()
-SUM_GREATER_THAN_X_MODEL.generate_csv()
+LINEAR_MODEL.generate_csv(noise=NOISE)
+MULTLINEAR_MODEL.generate_csv(noise=NOISE)
+POLYNOMIAL_MODEL_1.generate_csv(noise=NOISE)
+POLYNOMIAL_MODEL_2.generate_csv(noise=NOISE)
+SINUSOID_MODEL.generate_csv(noise=NOISE)
+OUTSIDE_CIRCLE_MODEL.generate_csv(noise=NOISE)
+SUM_GREATER_THAN_X_MODEL.generate_csv(noise=NOISE)
