@@ -6,13 +6,13 @@ import random
 import math
 import csv
 
-NOISE = 0
+NOISE = 0.1
 
 class DatasetModel(object):
     """A model able to generate values"""
 
     def __init__(self, name, model_function, number_of_variables,
-                 low=-10, high=10):
+                 low=-1, high=1):
         """Single neuron net initialization.
 
         Args:
@@ -77,7 +77,7 @@ MULTLINEAR_MODEL = DatasetModel(
 
 POLYNOMIAL_MODEL_1 = DatasetModel(
     name='polynomial',
-    model_function=lambda (x): x**3 - 0.732 * x**2 + 4*x + 10,
+    model_function=lambda (x): 5 * x**3 - 7.732 * x**2 + 4*x + 10,
     number_of_variables=1
 )
 
@@ -89,18 +89,18 @@ POLYNOMIAL_MODEL_2 = DatasetModel(
 
 SINUSOID_MODEL = DatasetModel(
     name='sinusoid',
-    model_function=lambda (x): math.sin(x / 5),
+    model_function=lambda (x): math.sin(x * 5),
     number_of_variables=1
 )
 
 OUTSIDE_CIRCLE_MODEL = DatasetModel(
     name='outside_circle',
-    model_function=lambda (x, y): 1 if x**2 + y**2 > 5 else 0,
+    model_function=lambda (x, y): 1 if x**2 + y**2 > 0.5 else 0,
     number_of_variables=2
 )
 
-SUM_GREATER_THAN_X_MODEL = DatasetModel(
-    name='outside_circle',
+LOGISTIC_LINE = DatasetModel(
+    name='logistic_line',
     model_function=lambda (x, y): 1 if 3*x - y > 0 else 0,
     number_of_variables=2
 )
@@ -111,4 +111,4 @@ POLYNOMIAL_MODEL_1.generate_csv(noise=NOISE)
 POLYNOMIAL_MODEL_2.generate_csv(noise=NOISE)
 SINUSOID_MODEL.generate_csv(noise=NOISE)
 OUTSIDE_CIRCLE_MODEL.generate_csv(noise=NOISE)
-SUM_GREATER_THAN_X_MODEL.generate_csv(noise=NOISE)
+LOGISTIC_LINE.generate_csv(noise=NOISE)

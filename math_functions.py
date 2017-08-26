@@ -81,9 +81,9 @@ class CrossEntropy(object):
     def diff(cls, val1, val2):
         if val1 == val2:
             return 0
-        if val2 == 0 and val1 <= 0:
+        if val2 == 0 and val1 >= 1:
             return -1e3
-        elif val2 == 1 and val1 >= 1:
+        elif val2 == 1 and val1 <= 0:
             return 1e3
         elif val2 == 0:
             return 1/(1 - val1) - 1
