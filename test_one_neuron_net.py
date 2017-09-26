@@ -12,7 +12,7 @@ class TestOneNeuronNet(unittest.TestCase):
 
     def test_initialization(self):
         number_of_dendrons = 10
-        onn = OneNeuronNet(number_of_dendrons, m.Sigmoid, m.L2Norm)
+        onn = OneNeuronNet(number_of_dendrons, m.Sigmoid, m.SquaredError)
         self.assertEqual(onn.number_of_dendrons, number_of_dendrons)
         self.assertEqual(onn.activation_function, m.Sigmoid)
         self.assertEqual(onn.weights.shape, (number_of_dendrons,))
@@ -21,7 +21,7 @@ class TestOneNeuronNet(unittest.TestCase):
     def test_forward_pass(self):
         """Test for the forward pass, under different settings"""
         number_of_dendrons = 2
-        onn = OneNeuronNet(number_of_dendrons, m.Sigmoid, m.L2Norm)
+        onn = OneNeuronNet(number_of_dendrons, m.Sigmoid, m.SquaredError)
         onn.bias = 0
         onn.weights = np.array([1, 0])
 
@@ -43,7 +43,7 @@ class TestOneNeuronNet(unittest.TestCase):
         number_of_dendrons = 2
         input_vector = np.array([2, 3])
 
-        onn = OneNeuronNet(number_of_dendrons, m.Identity, m.L2Norm)
+        onn = OneNeuronNet(number_of_dendrons, m.Identity, m.SquaredError)
         onn.bias = 0.5
         onn.weights = np.array([1, 2])
         cost, bias_adj, weight_adjs = onn.backpropagation(input_vector, 9)
@@ -52,7 +52,7 @@ class TestOneNeuronNet(unittest.TestCase):
         self.assertAlmostEqual(weight_adjs[0], -1)
         self.assertAlmostEqual(weight_adjs[1], -1.5)
 
-        onn = OneNeuronNet(number_of_dendrons, m.Sigmoid, m.L2Norm)
+        onn = OneNeuronNet(number_of_dendrons, m.Sigmoid, m.SquaredError)
         onn.bias = 1.
         onn.weights = np.array([1, 2])
         cost, bias_adj, weight_ajds = onn.backpropagation(input_vector, 0)
@@ -62,7 +62,7 @@ class TestOneNeuronNet(unittest.TestCase):
 
     def test_minibatch_train(self):
         """Tests for a minibatch training."""
-        onn = OneNeuronNet(3, m.Identity, m.L2Norm)
+        onn = OneNeuronNet(3, m.Identity, m.SquaredError)
         onn.bias = 1
         onn.weights = np.array([1, 2, 5])
         input_vectors = np.array([

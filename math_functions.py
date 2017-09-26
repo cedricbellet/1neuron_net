@@ -76,6 +76,9 @@ class CrossEntropy(object):
             return -math.log(1 - val1) - val1
         elif val2 == 1:
             return -math.log(val1) + val1 - 1
+        else:
+            return -(1 - val2) * (math.log(1 - val1) + val1) - val2 * \
+            (math.log(val1) - val1 + 1)
 
     @classmethod
     def diff(cls, val1, val2):
@@ -89,3 +92,5 @@ class CrossEntropy(object):
             return 1/(1 - val1) - 1
         elif val2 == 1:
             return -1/val1 + 1
+        else:
+            return (1 - val2) * (1/(1 - val1) - 1) + val2 * (-1/val1 + 1)
